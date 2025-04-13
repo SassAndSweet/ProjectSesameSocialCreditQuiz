@@ -36,22 +36,8 @@ st.markdown("""
     color: white !important;
 }
 
-/* Style regular buttons */
-.stButton button {
-    color: #00008B !important; /* Dark blue text */
-    background-color: white !important;
-    font-weight: bold !important;
-}
-
-/* Style form submit buttons */
-button[kind="primaryFormSubmit"] {
-    color: #00008B !important; /* Dark blue text */
-    background-color: white !important;
-    font-weight: bold !important;
-}
-
-/* Target all buttons in the app */
-button {
+/* Attempt to style all buttons in the app */
+button, .stBtn, .stButton>button, .stForm button, [data-testid="stFormSubmitButton"] button {
     color: #00008B !important; /* Dark blue text */
     background-color: white !important;
     font-weight: bold !important;
@@ -270,8 +256,17 @@ def main():
         else:
             score_total += 5
 
-        # Submit button for the form.
-        submitted = st.form_submit_button("Submit Quiz")
+submitted = st.form_submit_button("Submit Quiz")
+# Add custom styling to the submit button
+if not submitted:
+    st.markdown("""
+    <style>
+    [data-testid="stFormSubmitButton"] button {
+        background-color: white !important;
+        color: #00008B !important;
+    }
+    </style>
+    """, unsafe_allow_html=True)
 
     if submitted:
         # Scale score: 350 (min) to 950 (max)
@@ -308,9 +303,17 @@ def main():
         st.write("### Social Benefits Eligibility:")
         st.write(benefits)
         
-        # Retake quiz option – rerun the app.
-        if st.button("Retake Quiz"):
-            st.rerun()
+# Custom styling for the Retake Quiz button
+st.markdown("""
+<style>
+.stButton button {
+    background-color: white !important;
+    color: #00008B !important;
+}
+</style>
+""", unsafe_allow_html=True)
+if st.button("Retake Quiz"):
+    st.rerun()
 
 if __name__ == "__main__":
     main()
