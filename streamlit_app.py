@@ -7,17 +7,19 @@ st.markdown("""
     background-image: url("https://raw.githubusercontent.com/SassAndSweet/ProjectSesameSocialCreditQuiz/main/sesame_background.png");
     background-size: cover;
     background-position: center;
+    background-attachment: fixed;
+    overflow-y: auto;
 }
 
 /* Semi-transparent overlay */
 .stApp::after {
     content: "";
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(255, 255, 255, 0.25);
+    background-color: rgba(0, 0, 0, 0.4);
     z-index: 0;
     pointer-events: none;
 }
@@ -29,7 +31,7 @@ st.markdown("""
 }
 
 /* Make all text bold and white */
-.stApp, .stApp p, .stApp label, .stApp button, .stApp div, .stRadio label, .stMarkdown, .stForm {
+.stApp, .stApp p, .stApp label, .stApp div, .stRadio label, .stMarkdown, .stForm {
     font-weight: bold !important;
     color: white !important;
 }
@@ -40,9 +42,15 @@ st.markdown("""
     background-color: white !important;
 }
 
-/* Adjust background of content areas to be darker */
+/* Adjust background of content areas to be more transparent */
 .stApp > div {
-    background-color: rgba(0, 0, 0, 0.7) !important;
+    background-color: rgba(0, 0, 0, 0.4) !important;
+}
+
+/* Fix scrolling */
+[data-testid="stAppViewContainer"] {
+    overflow: auto;
+    height: 100vh;
 }
 </style>
 """, unsafe_allow_html=True)
