@@ -1,6 +1,6 @@
 import streamlit as st
 
-# Add custom CSS for background image
+# Add custom CSS for background image and bold text
 st.markdown("""
 <style>
 .stApp {
@@ -26,6 +26,11 @@ st.markdown("""
 .stApp > header, .stApp > div {
     position: relative;
     z-index: 1;
+}
+
+/* Make all text bold */
+.stApp, .stApp p, .stApp label, .stApp button, .stApp div {
+    font-weight: bold !important;
 }
 </style>
 """, unsafe_allow_html=True)
