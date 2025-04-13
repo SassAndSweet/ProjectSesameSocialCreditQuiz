@@ -235,16 +235,16 @@ def main():
         else:
             score_total += 5
 
-        # Submit button with special styling
-        st.markdown("""
-        <style>
-        div[data-testid="stFormSubmitButton"] button {
-            background-color: white !important;
-            color: #00008B !important;
-            font-weight: bold !important;
-        }
-        </style>
-        """, unsafe_allow_html=True)
+       # Style for form submit button
+st.markdown("""
+<style>
+div[data-testid="stFormSubmitButton"] button {
+    background-color: black !important;
+    color: white !important;
+    font-weight: bold !important;
+}
+</style>
+""", unsafe_allow_html=True)
         
         # Submit button for the form.
         submitted = st.form_submit_button("Submit Quiz")
@@ -285,12 +285,15 @@ def main():
         st.write(benefits)
         
         # Style for the Retake Quiz button
-        st.markdown("""
-        <style>
-        .stButton button {
-            background-color: white !important;
-            color: #00008B !important;
-            font-weight: bold !important;
+st.markdown("""
+<style>
+.stButton button {
+    background-color: black !important;
+    color: white !important;
+    font-weight: bold !important;
+}
+</style>
+""", unsafe_allow_html=True)
         }
         </style>
         """, unsafe_allow_html=True)
