@@ -17,24 +17,21 @@ st.markdown("""
         left: 0;
         width: 100%;
         height: 100%;
-        background-color: rgba(0, 0, 0, 0.25);
+        background-color: rgba(0, 0, 0, 0.4);
         z-index: -1;
     }
     
-/* Make all text bold white and 16pt */
-.stApp p, .stApp label, div.stRadio label, .stMarkdown p {
-    font-weight: bold !important;
-    color: white !important;
-    font-size: 16pt !important;
-}
-
-/* Title styling */
-.stApp h1, .stApp h2, .stApp h3 {
-    color: white !important;
-    font-weight: bold !important;
-}
-}
-
+    /* Make all text bold white and 14pt */
+    .stApp p, .stApp label, div.stRadio label, .stMarkdown p {
+        font-weight: bold !important;
+        color: white !important;
+        font-size: 14pt !important;
+    }
+    
+    /* Title styling */
+    .stApp h1, .stApp h2, .stApp h3 {
+        color: white !important;
+        font-weight: bold !important;
     }
     
     /* Button styling - for all buttons */
