@@ -32,6 +32,13 @@ st.markdown("""
         color: white !important;
         font-weight: bold !important;
     }
+    
+    /* Button styling - for all buttons */
+    .stButton button, div[data-testid="stFormSubmitButton"] button {
+        background-color: black !important;
+        color: white !important;
+        font-weight: bold !important;
+    }
 </style>
 """, unsafe_allow_html=True)
 
@@ -234,17 +241,6 @@ def main():
             score_total += 10
         else:
             score_total += 5
-
-       # Style for form submit button
-st.markdown("""
-<style>
-div[data-testid="stFormSubmitButton"] button {
-    background-color: black !important;
-    color: white !important;
-    font-weight: bold !important;
-}
-</style>
-""", unsafe_allow_html=True)
         
         # Submit button for the form.
         submitted = st.form_submit_button("Submit Quiz")
@@ -283,20 +279,6 @@ div[data-testid="stFormSubmitButton"] button {
             )
         st.write("### Social Benefits Eligibility:")
         st.write(benefits)
-        
-        # Style for the Retake Quiz button
-st.markdown("""
-<style>
-.stButton button {
-    background-color: black !important;
-    color: white !important;
-    font-weight: bold !important;
-}
-</style>
-""", unsafe_allow_html=True)
-        }
-        </style>
-        """, unsafe_allow_html=True)
         
         # Retake quiz option – rerun the app.
         if st.button("Retake Quiz"):
