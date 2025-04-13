@@ -21,11 +21,11 @@ st.markdown("""
         z-index: -1;
     }
     
-/* Make all text bold white and 14pt */
+/* Make all text bold white and 16pt */
 .stApp p, .stApp label, div.stRadio label, .stMarkdown p {
     font-weight: bold !important;
     color: white !important;
-    font-size: 14pt !important;
+    font-size: 16pt !important;
 }
 
 /* Title styling */
