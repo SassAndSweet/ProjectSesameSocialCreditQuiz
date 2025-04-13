@@ -21,16 +21,18 @@ st.markdown("""
         z-index: -1;
     }
     
-    /* Make all text bold and white */
-    .stApp p, .stApp label, div.stRadio label, .stMarkdown p {
-        font-weight: bold !important;
-        color: white !important;
-    }
-    
-    /* Title styling */
-    .stApp h1, .stApp h2, .stApp h3 {
-        color: white !important;
-        font-weight: bold !important;
+    /* Make all text bold and hot pink instead of white */
+.stApp p, .stApp label, div.stRadio label, .stMarkdown p {
+    font-weight: bold !important;
+    color: #FF69B4 !important;
+}
+
+/* Title styling */
+.stApp h1, .stApp h2, .stApp h3 {
+    color: #FF69B4 !important;
+    font-weight: bold !important;
+}
+
     }
     
     /* Button styling - for all buttons */
