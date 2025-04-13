@@ -38,8 +38,10 @@ st.markdown("""
 
 /* Make sure form elements and buttons are still visible */
 .stButton button {
-    color: black !important;
+    color: #00008B !important; /* Dark blue text */
     background-color: white !important;
+    font-weight: bold !important;
+}
 }
 
 /* Adjust background of content areas to be more transparent */
