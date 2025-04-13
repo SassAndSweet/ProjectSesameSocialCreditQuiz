@@ -39,6 +39,7 @@ st.markdown("""
         background-color: black !important;
         color: white !important;
         font-weight: bold !important;
+        border: 2px solid red !important;
     }
 </style>
 """, unsafe_allow_html=True)
