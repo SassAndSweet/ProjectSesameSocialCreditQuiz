@@ -36,12 +36,25 @@ st.markdown("""
     color: white !important;
 }
 
-/* Make sure form elements and buttons are still visible */
+/* Style regular buttons */
 .stButton button {
     color: #00008B !important; /* Dark blue text */
     background-color: white !important;
     font-weight: bold !important;
 }
+
+/* Style form submit buttons */
+button[kind="primaryFormSubmit"] {
+    color: #00008B !important; /* Dark blue text */
+    background-color: white !important;
+    font-weight: bold !important;
+}
+
+/* Target all buttons in the app */
+button {
+    color: #00008B !important; /* Dark blue text */
+    background-color: white !important;
+    font-weight: bold !important;
 }
 
 /* Adjust background of content areas to be more transparent */
