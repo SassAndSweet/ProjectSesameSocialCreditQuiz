@@ -1,6 +1,8 @@
 import streamlit as st
 
-# Add custom CSS for background image and general styling
+import streamlit as st
+
+# Add custom CSS for background image and styling
 st.markdown("""
 <style>
 .stApp {
@@ -47,17 +49,18 @@ st.markdown("""
     height: 100vh;
 }
 
-/* Custom button style */
-.custom-button {
+/* IMPORTANT BUTTON STYLING */
+button[kind="primaryFormSubmit"], .stButton > button {
     background-color: white !important;
     color: #00008B !important;
     font-weight: bold !important;
-    padding: 10px 20px;
-    border-radius: 5px;
-    border: none;
-    cursor: pointer;
-    margin: 10px 0;
-    font-size: 16px;
+    border: none !important;
+}
+
+/* Override any competing styles */
+.stForm [data-testid="stFormSubmitButton"] button {
+    background-color: white !important;
+    color: #00008B !important;
 }
 </style>
 """, unsafe_allow_html=True)
