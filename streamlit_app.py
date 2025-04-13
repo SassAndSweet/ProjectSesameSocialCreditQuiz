@@ -1,6 +1,6 @@
 import streamlit as st
 
-# Add custom CSS for background image, bold text, and white text
+# Add custom CSS for background image and general styling
 st.markdown("""
 <style>
 .stApp {
@@ -36,13 +36,6 @@ st.markdown("""
     color: white !important;
 }
 
-/* Style buttons */
-.stButton button, [data-testid="baseButton-secondary"] {
-    color: #00008B !important; /* Dark blue text */
-    background-color: white !important;
-    font-weight: bold !important;
-}
-
 /* Adjust background of content areas to be more transparent */
 .stApp > div {
     background-color: rgba(0, 0, 0, 0.4) !important;
@@ -54,8 +47,15 @@ st.markdown("""
     height: 100vh;
 }
 
-/* Style form elements */
-.stForm [data-testid="stFormSubmitButton"] button {
+/* Button styling - specifically target form submit buttons */
+div[data-testid="stFormSubmitButton"] button {
+    background-color: white !important;
+    color: #00008B !important;
+    font-weight: bold !important;
+}
+
+/* Button styling - target regular buttons */
+.stButton button {
     background-color: white !important;
     color: #00008B !important;
     font-weight: bold !important;
@@ -262,18 +262,8 @@ def main():
             score_total += 10
         else:
             score_total += 5
-
-        # Extra styling for the submit button
-        st.markdown("""
-        <style>
-        div[data-testid="stFormSubmitButton"] button {
-            background-color: white !important;
-            color: #00008B !important;
-        }
-        </style>
-        """, unsafe_allow_html=True)
         
-        # Submit button for the form.
+        # Submit button for the form
         submitted = st.form_submit_button("Submit Quiz")
 
     if submitted:
@@ -310,16 +300,6 @@ def main():
             )
         st.write("### Social Benefits Eligibility:")
         st.write(benefits)
-        
-        # Extra styling for the retake button
-        st.markdown("""
-        <style>
-        .stButton button {
-            background-color: white !important;
-            color: #00008B !important;
-        }
-        </style>
-        """, unsafe_allow_html=True)
         
         # Retake quiz option – rerun the app.
         if st.button("Retake Quiz"):
