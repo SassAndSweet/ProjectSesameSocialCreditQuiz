@@ -4,7 +4,7 @@ import streamlit as st
 st.markdown("""
 <style>
 .stApp {
-    background-image: url("https://raw.githubusercontent.com/SassAndSweet/ProjectSesameSocialCreditQuiz/main/sesame-cookies.png");
+    background-image: url("https://raw.githubusercontent.com/SassAndSweet/ProjectSesameSocialCreditQuiz/main/sesame_background.png");
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
@@ -35,8 +35,6 @@ def main():
     st.title("Sesame Credit Quiz")
     st.write("Answer the following questions to find out what exclusive social perks you might earn!")
 
-    # Rest of your existing code...
-
     # Use a form to collect all responses at once.
     with st.form("quiz_form"):
         score_total = 0
@@ -48,7 +46,7 @@ def main():
             "1. How frequently do you pay your bills?",
             (
                 "Always on time – even my bills get a red carpet treatment!",
-                "Usually on time – I’m no slacker.",
+                "Usually on time – I'm no slacker.",
                 "Sometimes a bit late – my procrastination is legendary.",
                 "Often forget – my memes come before my bills.",
                 "Never – I prefer living life on the wild side."
@@ -56,7 +54,7 @@ def main():
         )
         if q1 == "Always on time – even my bills get a red carpet treatment!":
             score_total += 20
-        elif q1 == "Usually on time – I’m no slacker.":
+        elif q1 == "Usually on time – I'm no slacker.":
             score_total += 15
         elif q1 == "Sometimes a bit late – my procrastination is legendary.":
             score_total += 10
@@ -69,13 +67,13 @@ def main():
         q2 = st.radio(
             "2. How long have you enjoyed stable employment/income?",
             (
-                "I’ve been working since the dinosaurs roamed – a true career veteran!",
+                "I've been working since the dinosaurs roamed – a true career veteran!",
                 "Over 10 years of steady work – reliability is my middle name.",
                 "A few years – still figuring out the ropes.",
-                "Just started – I’m the new kid on the block."
+                "Just started – I'm the new kid on the block."
             )
         )
-        if q2 == "I’ve been working since the dinosaurs roamed – a true career veteran!":
+        if q2 == "I've been working since the dinosaurs roamed – a true career veteran!":
             score_total += 20
         elif q2 == "Over 10 years of steady work – reliability is my middle name.":
             score_total += 15
@@ -88,17 +86,17 @@ def main():
         q3 = st.radio(
             "3. How would you rate your savings and investment habits?",
             (
-                "I’m squirreling away nuts like a financial fox!",
+                "I'm squirreling away nuts like a financial fox!",
                 "I save whenever possible – my piggy bank is growing.",
-                "I try, but there’s always a tempting sale.",
+                "I try, but there's always a tempting sale.",
                 "Spending is my cardio – live for today!"
             )
         )
-        if q3 == "I’m squirreling away nuts like a financial fox!":
+        if q3 == "I'm squirreling away nuts like a financial fox!":
             score_total += 20
         elif q3 == "I save whenever possible – my piggy bank is growing.":
             score_total += 15
-        elif q3 == "I try, but there’s always a tempting sale.":
+        elif q3 == "I try, but there's always a tempting sale.":
             score_total += 10
         else:
             score_total += 5
@@ -143,16 +141,16 @@ def main():
             "6. How active are you in community or volunteer work?",
             (
                 "I'm practically a neighborhood superhero – always ready to lend a hand!",
-                "I help out when asked – I’m a team player.",
-                "I’m occasionally involved, when I remember.",
+                "I help out when asked – I'm a team player.",
+                "I'm occasionally involved, when I remember.",
                 "I'm more of a silent observer – my aura speaks for itself."
             )
         )
         if q6 == "I'm practically a neighborhood superhero – always ready to lend a hand!":
             score_total += 20
-        elif q6 == "I help out when asked – I’m a team player.":
+        elif q6 == "I help out when asked – I'm a team player.":
             score_total += 15
-        elif q6 == "I’m occasionally involved, when I remember.":
+        elif q6 == "I'm occasionally involved, when I remember.":
             score_total += 10
         else:
             score_total += 5
@@ -265,7 +263,7 @@ def main():
         else:
             benefits = (
                 "Bronze Tier: Time to boost that social karma!\n"
-                "But don’t despair – perks include modest discounts, a chance to earn extra points through community engagement, "
+                "But don't despair – perks include modest discounts, a chance to earn extra points through community engagement, "
                 "and plenty of opportunities to work your way up."
             )
         st.write("### Social Benefits Eligibility:")
@@ -273,7 +271,7 @@ def main():
         
         # Retake quiz option – rerun the app.
         if st.button("Retake Quiz"):
-            st.experimental_rerun()
+            st.rerun()
 
 if __name__ == "__main__":
     main()
