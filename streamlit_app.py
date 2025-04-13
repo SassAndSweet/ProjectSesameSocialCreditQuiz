@@ -1,6 +1,6 @@
 import streamlit as st
 
-# Add custom CSS for background image and bold text
+# Add custom CSS for background image, bold text, and white text
 st.markdown("""
 <style>
 .stApp {
@@ -28,9 +28,21 @@ st.markdown("""
     z-index: 1;
 }
 
-/* Make all text bold */
-.stApp, .stApp p, .stApp label, .stApp button, .stApp div {
+/* Make all text bold and white */
+.stApp, .stApp p, .stApp label, .stApp button, .stApp div, .stRadio label, .stMarkdown, .stForm {
     font-weight: bold !important;
+    color: white !important;
+}
+
+/* Make sure form elements and buttons are still visible */
+.stButton button {
+    color: black !important;
+    background-color: white !important;
+}
+
+/* Adjust background of content areas to be darker */
+.stApp > div {
+    background-color: rgba(0, 0, 0, 0.7) !important;
 }
 </style>
 """, unsafe_allow_html=True)
