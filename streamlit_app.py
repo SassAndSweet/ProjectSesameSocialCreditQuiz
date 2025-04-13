@@ -21,6 +21,13 @@ st.markdown("""
         z-index: -1;
     }
     
+    /* Create black background for main content */
+    .main .block-container {
+        background-color: black !important;
+        padding: 20px;
+        border-radius: 10px;
+    }
+    
     /* Make all text bold white and 14pt */
     .stApp p, .stApp label, div.stRadio label, .stMarkdown p {
         font-weight: bold !important;
