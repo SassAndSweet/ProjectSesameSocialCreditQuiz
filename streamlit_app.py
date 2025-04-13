@@ -21,16 +21,18 @@ st.markdown("""
         z-index: -1;
     }
     
-    /* Make all text bold and hot pink instead of white */
+/* Make all text bold white and 14pt */
 .stApp p, .stApp label, div.stRadio label, .stMarkdown p {
     font-weight: bold !important;
-    color: #FF69B4 !important;
+    color: white !important;
+    font-size: 14pt !important;
 }
 
 /* Title styling */
 .stApp h1, .stApp h2, .stApp h3 {
-    color: #FF69B4 !important;
+    color: white !important;
     font-weight: bold !important;
+}
 }
 
     }
