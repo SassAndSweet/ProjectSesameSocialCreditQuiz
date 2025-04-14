@@ -1,15 +1,16 @@
 import streamlit as st
 
-# Add custom CSS for background image
+# Add custom CSS for background image and black content area
 st.markdown("""
 <style>
+    /* Background image for the whole app */
     .stApp {
         background-image: url("https://raw.githubusercontent.com/SassAndSweet/ProjectSesameSocialCreditQuiz/main/sesame_background.png");
         background-size: cover;
         background-position: center;
     }
     
-    /* Add a semi-transparent overlay */
+    /* Semi-transparent overlay for the whole app */
     .stApp::before {
         content: "";
         position: fixed;
@@ -21,14 +22,15 @@ st.markdown("""
         z-index: -1;
     }
     
-    /* Create black background for main content */
-    .main .block-container {
+    /* Black background for the main content area */
+    [data-testid="stAppViewContainer"] > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) {
         background-color: black !important;
         padding: 20px;
         border-radius: 10px;
+        margin: 20px;
     }
     
-    /* Make all text bold white and 14pt */
+    /* Text styling */
     .stApp p, .stApp label, div.stRadio label, .stMarkdown p {
         font-weight: bold !important;
         color: white !important;
@@ -41,7 +43,7 @@ st.markdown("""
         font-weight: bold !important;
     }
     
-    /* Button styling - for all buttons */
+    /* Button styling */
     .stButton button, div[data-testid="stFormSubmitButton"] button {
         background-color: black !important;
         color: white !important;
