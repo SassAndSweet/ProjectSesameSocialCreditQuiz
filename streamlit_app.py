@@ -20,6 +20,9 @@ else:
 
 st.markdown(f"""
 <style>
+    /* Import Noto Serif SC from Google Fonts */
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&display=swap');
+
     /* Watermark background image via pseudo-element on stApp */
     .stApp {{
         position: relative;
@@ -51,6 +54,7 @@ st.markdown(f"""
     .stApp h1 {{
         color: #00008B !important;
         font-weight: bold !important;
+        font-family: 'Noto Serif SC', serif !important;
     }}
 
     /* Subtitle / intro text */
@@ -65,6 +69,7 @@ st.markdown(f"""
         color: #00008B !important;
         font-weight: bold !important;
         font-size: 15px !important;
+        font-family: 'Noto Serif SC', serif !important;
     }}
 
     /* Radio option text */
@@ -78,6 +83,7 @@ st.markdown(f"""
     .stApp h2, .stApp h3 {{
         color: #00008B !important;
         font-weight: bold !important;
+        font-family: 'Noto Serif SC', serif !important;
     }}
 
     /* Results / benefits text */
@@ -88,9 +94,10 @@ st.markdown(f"""
     }}
 
     /* Submit button */
-    div[data-testid="stFormSubmitButton"] button {{
+    div[data-testid="stFormSubmitButton"] button,
+    div[data-testid="stFormSubmitButton"] button * {{
         background-color: #00008B !important;
-        color: white !important;
+        color: #ffffff !important;
         font-weight: bold !important;
         border: none !important;
         padding: 10px 24px !important;
@@ -102,9 +109,10 @@ st.markdown(f"""
     }}
 
     /* Retake Quiz button */
-    .stButton button {{
+    .stButton button,
+    .stButton button * {{
         background-color: #00008B !important;
-        color: white !important;
+        color: #ffffff !important;
         font-weight: bold !important;
         border: none !important;
         padding: 10px 24px !important;
