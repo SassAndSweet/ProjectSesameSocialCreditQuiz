@@ -103,9 +103,19 @@ st.markdown(f"""
         padding: 10px 24px !important;
         border-radius: 6px !important;
         font-size: 16px !important;
+        cursor: pointer !important;
+        transition: transform 0.1s ease, box-shadow 0.1s ease, background-color 0.15s ease !important;
+        box-shadow: 0 2px 6px rgba(0, 0, 139, 0.4) !important;
     }}
     div[data-testid="stFormSubmitButton"] button:hover {{
         background-color: #0000a3 !important;
+        box-shadow: 0 4px 10px rgba(0, 0, 139, 0.5) !important;
+        transform: translateY(-1px) !important;
+    }}
+    div[data-testid="stFormSubmitButton"] button:active {{
+        transform: scale(0.95) translateY(1px) !important;
+        box-shadow: 0 1px 3px rgba(0, 0, 139, 0.3) !important;
+        background-color: #000066 !important;
     }}
 
     /* Retake Quiz button */
@@ -118,22 +128,154 @@ st.markdown(f"""
         padding: 10px 24px !important;
         border-radius: 6px !important;
         font-size: 16px !important;
+        cursor: pointer !important;
+        transition: transform 0.1s ease, box-shadow 0.1s ease, background-color 0.15s ease !important;
+        box-shadow: 0 2px 6px rgba(0, 0, 139, 0.4) !important;
     }}
     .stButton button:hover {{
         background-color: #0000a3 !important;
+        box-shadow: 0 4px 10px rgba(0, 0, 139, 0.5) !important;
+        transform: translateY(-1px) !important;
+    }}
+    .stButton button:active {{
+        transform: scale(0.95) translateY(1px) !important;
+        box-shadow: 0 1px 3px rgba(0, 0, 139, 0.3) !important;
+        background-color: #000066 !important;
+    }}
+
+    /* Results section - smooth slide-in */
+    @keyframes slideIn {{
+        from {{
+            opacity: 0;
+            transform: translateY(20px);
+        }}
+        to {{
+            opacity: 1;
+            transform: translateY(0);
+        }}
+    }}
+    .results-section {{
+        animation: slideIn 0.5s ease forwards;
+    }}
+
+    /* Confetti canvas */
+    #confetti-canvas {{
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 999;
     }}
 </style>
 """, unsafe_allow_html=True)
+
+
+# --- Confetti + scroll JS (injected once on results render) ---
+CONFETTI_AND_SCROLL_JS = """
+<script>
+(function() {
+    // --- AUTO-SCROLL to results ---
+    var resultsEl = document.getElementById('results-anchor');
+    if (resultsEl) {
+        resultsEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    // --- CONFETTI (only fires if gold-confetti anchor exists) ---
+    var confettiTrigger = document.getElementById('gold-confetti-trigger');
+    if (!confettiTrigger) return;
+
+    var canvas = document.createElement('canvas');
+    canvas.id = 'confetti-canvas';
+    document.body.appendChild(canvas);
+    var ctx = canvas.getContext('2d');
+
+    function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    var pieces = [];
+    var colors = ['#FFD700','#FF6B6B','#4ECDC4','#45B7D1','#96CEB4','#FFEAA7','#DDA0DD','#98D8C8','#F7DC6F','#BB8FCE'];
+
+    function Piece(x, y) {
+        this.x = x;
+        this.y = y;
+        this.vx = (Math.random() - 0.5) * 12;
+        this.vy = (Math.random() - 3) * 10;
+        this.gravity = 0.15;
+        this.color = colors[Math.floor(Math.random() * colors.length)];
+        this.size = Math.random() * 8 + 4;
+        this.rotation = Math.random() * Math.PI * 2;
+        this.rotSpeed = (Math.random() - 0.5) * 0.3;
+        this.shape = Math.random() > 0.5 ? 'rect' : 'circle';
+        this.alpha = 1;
+    }
+
+    // Burst from top-center
+    function burst() {
+        var cx = canvas.width / 2;
+        var cy = canvas.height * 0.25;
+        for (var i = 0; i < 150; i++) {
+            pieces.push(new Piece(cx + (Math.random()-0.5)*60, cy + (Math.random()-0.5)*60));
+        }
+    }
+    burst();
+
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        for (var i = pieces.length - 1; i >= 0; i--) {
+            var p = pieces[i];
+            p.vy += p.gravity;
+            p.x += p.vx;
+            p.y += p.vy;
+            p.rotation += p.rotSpeed;
+            p.vx *= 0.995;
+
+            if (p.y > canvas.height) {
+                p.alpha -= 0.05;
+            }
+            if (p.alpha <= 0) {
+                pieces.splice(i, 1);
+                continue;
+            }
+
+            ctx.save();
+            ctx.globalAlpha = p.alpha;
+            ctx.fillStyle = p.color;
+            ctx.translate(p.x, p.y);
+            ctx.rotate(p.rotation);
+            if (p.shape === 'rect') {
+                ctx.fillRect(-p.size/2, -p.size/2, p.size, p.size * 0.6);
+            } else {
+                ctx.beginPath();
+                ctx.arc(0, 0, p.size/2, 0, Math.PI * 2);
+                ctx.fill();
+            }
+            ctx.restore();
+        }
+
+        if (pieces.length > 0) {
+            requestAnimationFrame(animate);
+        } else {
+            canvas.remove();
+        }
+    }
+    animate();
+})();
+</script>
+"""
 
 
 def main():
     st.title("Sesame Credit Quiz")
     st.write("Answer the following questions to find out what exclusive social perks you might earn!")
 
-    # Use a form to collect all responses at once.
     with st.form("quiz_form"):
         score_total = 0
-        # Maximum possible score per question is 20, so for 10 questions:
         max_total = 20 * 10
 
         # 1. Bill Payment Frequency
@@ -326,17 +468,21 @@ def main():
         else:
             score_total += 5
 
-        # Submit button for the form.
         submitted = st.form_submit_button("Submit Quiz")
 
     if submitted:
-        # Scale score: 350 (min) to 950 (max)
         predicted_credit = 350 + int((score_total / max_total) * 600)
+
+        # Scroll anchor — JS will smooth-scroll here
+        st.markdown('<div id="results-anchor"></div>', unsafe_allow_html=True)
+
+        # Results wrapped in slide-in animation
+        st.markdown('<div class="results-section">', unsafe_allow_html=True)
         st.markdown("---")
         st.write(f"**Your total score is:** {score_total} out of {max_total}")
         st.write(f"**Predicted Social Credit Score:** {predicted_credit}")
-        
-        # Determine humorous social benefits
+
+        is_gold = False
         if predicted_credit >= 900:
             benefits = (
                 "VIP Access: You're a social superstar!\n"
@@ -344,6 +490,7 @@ def main():
                 "and an honorary title as the 'Mogul of Mingling.'"
             )
         elif predicted_credit >= 750:
+            is_gold = True
             benefits = (
                 "Gold Tier: Highly esteemed in the social scene.\n"
                 "Reap benefits including premium networking opportunities, special discounts at trendy hotspots, "
@@ -361,10 +508,18 @@ def main():
                 "But don't despair – perks include modest discounts, a chance to earn extra points through community engagement, "
                 "and plenty of opportunities to work your way up."
             )
+
         st.write("### Social Benefits Eligibility:")
         st.write(benefits)
-        
-        # Retake quiz option – rerun the app.
+        st.markdown('</div>', unsafe_allow_html=True)
+
+        # Gold Tier confetti trigger anchor
+        if is_gold:
+            st.markdown('<div id="gold-confetti-trigger"></div>', unsafe_allow_html=True)
+
+        # Inject JS — always scrolls, confetti only if Gold trigger exists
+        st.markdown(CONFETTI_AND_SCROLL_JS, unsafe_allow_html=True)
+
         if st.button("Retake Quiz"):
             st.rerun()
 
