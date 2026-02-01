@@ -1,45 +1,122 @@
 import streamlit as st
+import base64
 
-# Add custom CSS for background image and styling
-st.markdown("""
+# Load background image and encode as base64 for reliable embedding
+def get_base64_image(image_path):
+    try:
+        with open(image_path, "rb") as f:
+            return base64.b64encode(f.read()).decode("utf-8")
+    except FileNotFoundError:
+        return None
+
+# Try local file first (works on Streamlit Cloud with repo image),
+# fall back to raw GitHub URL as base64 isn't available
+img_base64 = get_base64_image("sesame_background.png")
+
+if img_base64:
+    bg_image_css = f'url("data:image/png;base64,{img_base64}")'
+else:
+    bg_image_css = 'url("https://raw.githubusercontent.com/SassAndSweet/ProjectSesameSocialCreditQuiz/main/sesame_background.png")'
+
+st.markdown(f"""
 <style>
-    /* Background image for the whole app */
-    .stApp {
-        background-image: url("https://raw.githubusercontent.com/SassAndSweet/ProjectSesameSocialCreditQuiz/main/sesame_background.png");
+    /* Watermark background image via pseudo-element on stApp */
+    .stApp {{
+        position: relative;
+        background-color: #f5f5f0;
+    }}
+
+    .stApp::before {{
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: {bg_image_css};
         background-size: cover;
         background-position: center;
-    }
-    
-    /* Content container with black background */
-    .css-18e3th9 {
-        background-color: black !important;
-        padding: 2rem;
-        margin: 2rem;
-        border-radius: 10px;
-    }
-    
-    /* Text styling */
-    .stApp p, .stApp label, div.stRadio label, .stMarkdown p {
+        opacity: 0.12;
+        z-index: 0;
+        pointer-events: none;
+    }}
+
+    /* Push all content above the watermark */
+    .stApp > * {{
+        position: relative;
+        z-index: 1;
+    }}
+
+    /* Title */
+    .stApp h1 {{
+        color: #00008B !important;
         font-weight: bold !important;
-        color: white !important;
-        font-size: 14pt !important;
-    }
-    
-    /* Title styling */
-    .stApp h1, .stApp h2, .stApp h3 {
+    }}
+
+    /* Subtitle / intro text */
+    .stApp > div p {{
+        color: #1a1a2e !important;
+        font-weight: 600 !important;
+        font-size: 15px !important;
+    }}
+
+    /* Question labels (radio group headers) */
+    .stRadio label span {{
+        color: #00008B !important;
+        font-weight: bold !important;
+        font-size: 15px !important;
+    }}
+
+    /* Radio option text */
+    .stRadio div label {{
+        color: #1a1a2e !important;
+        font-weight: 600 !important;
+        font-size: 14px !important;
+    }}
+
+    /* Section headers (h2, h3) */
+    .stApp h2, .stApp h3 {{
+        color: #00008B !important;
+        font-weight: bold !important;
+    }}
+
+    /* Results / benefits text */
+    .stMarkdown p {{
+        color: #1a1a2e !important;
+        font-weight: 600 !important;
+        font-size: 15px !important;
+    }}
+
+    /* Submit button */
+    div[data-testid="stFormSubmitButton"] button {{
+        background-color: #00008B !important;
         color: white !important;
         font-weight: bold !important;
-    }
-    
-    /* Button styling */
-    .stButton button, div[data-testid="stFormSubmitButton"] button {
-        background-color: black !important;
+        border: none !important;
+        padding: 10px 24px !important;
+        border-radius: 6px !important;
+        font-size: 16px !important;
+    }}
+    div[data-testid="stFormSubmitButton"] button:hover {{
+        background-color: #0000a3 !important;
+    }}
+
+    /* Retake Quiz button */
+    .stButton button {{
+        background-color: #00008B !important;
         color: white !important;
         font-weight: bold !important;
-        border: 2px solid red !important;
-    }
+        border: none !important;
+        padding: 10px 24px !important;
+        border-radius: 6px !important;
+        font-size: 16px !important;
+    }}
+    .stButton button:hover {{
+        background-color: #0000a3 !important;
+    }}
 </style>
 """, unsafe_allow_html=True)
+
 
 def main():
     st.title("Sesame Credit Quiz")
