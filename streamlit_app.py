@@ -176,27 +176,30 @@ st.markdown(f"""
 CONFETTI_AND_SCROLL_JS = """
 <script>
 (function() {
+    // st.components.v1.html runs in an iframe — target the parent Streamlit page
+    var doc = window.parent.document;
+
     // --- AUTO-SCROLL to results ---
-    var resultsEl = document.getElementById('results-anchor');
+    var resultsEl = doc.getElementById('results-anchor');
     if (resultsEl) {
         resultsEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
     // --- CONFETTI (only fires if gold-confetti anchor exists) ---
-    var confettiTrigger = document.getElementById('gold-confetti-trigger');
+    var confettiTrigger = doc.getElementById('gold-confetti-trigger');
     if (!confettiTrigger) return;
 
-    var canvas = document.createElement('canvas');
+    var canvas = doc.createElement('canvas');
     canvas.id = 'confetti-canvas';
-    document.body.appendChild(canvas);
+    doc.body.appendChild(canvas);
     var ctx = canvas.getContext('2d');
 
     function resize() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+        canvas.width = window.parent.innerWidth;
+        canvas.height = window.parent.innerHeight;
     }
     resize();
-    window.addEventListener('resize', resize);
+    window.parent.addEventListener('resize', resize);
 
     var pieces = [];
     var colors = ['#FFD700','#FF6B6B','#4ECDC4','#45B7D1','#96CEB4','#FFEAA7','#DDA0DD','#98D8C8','#F7DC6F','#BB8FCE'];
@@ -517,8 +520,8 @@ def main():
         if is_gold:
             st.markdown('<div id="gold-confetti-trigger"></div>', unsafe_allow_html=True)
 
-        # Inject JS — always scrolls, confetti only if Gold trigger exists
-        st.markdown(CONFETTI_AND_SCROLL_JS, unsafe_allow_html=True)
+        # Inject JS via components.v1.html — st.markdown strips <script> tags in modern Streamlit
+        st.components.v1.html(CONFETTI_AND_SCROLL_JS, height=0)
 
         if st.button("Retake Quiz"):
             st.rerun()
